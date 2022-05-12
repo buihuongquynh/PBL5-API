@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('phone_number')->index();
             $table->string('address')->index();
             $table->string('password');
+            $table->unsignedInteger('role');
             $table->rememberToken();
             $table->timestamps();
         });
