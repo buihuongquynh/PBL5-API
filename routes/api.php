@@ -2,6 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +24,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('logout', 'Auth\AuthController@logout');
     Route::get('user-detail', 'Auth\AuthController@userDetail');
 });
+Route::resource('user', 'UserController');
+Route::resource('brand', 'BrandController');
+Route::resource('cart', 'CartController');
+Route::resource('order', 'OrderController');
+Route::resource('product', 'ProductController');
