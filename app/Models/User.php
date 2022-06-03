@@ -10,12 +10,12 @@ class User extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'email',
-        'date_of_birth',
+        'birthday',
         'gender',
-        'phone_number',
+        'phoneNumber',
+        'email',
         'address',
-        'password',
-        'role',
+        'orderHistory',
+        'cartID',
     ];
 }
