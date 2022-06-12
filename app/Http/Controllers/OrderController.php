@@ -37,14 +37,15 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-            'origin' => 'required'
-          ]);
-          
+        // $request->validate([
+        //     'name' => 'required|max:255',
+        //     'origin' => 'required'
+        //   ]);
           $data = new Order([
-            'name' => $request->get('name'),
-            'origin' => $request->get('origin')
+            'product_id'=> $request->get('product_id'),
+            'user_id'=> $request->get('user_id'),
+            'status'=> $request->get('status'),
+            'shipping_address'=> $request->get('shipping_address'),
           ]);
       
           $data->save();
@@ -85,13 +86,14 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $data = Order::findOrFail($id);
-        $request->validate([
-        'name' => 'required|max:255',
-        'origin' => 'required'
-        ]);
-
-        $data->name = $request->get('name');
-        $data->origin = $request->get('origin');
+        // $request->validate([
+        // 'name' => 'required|max:255',
+        // 'origin' => 'required'
+        // ]);
+        $data->product_id = $request->get('product_id');
+        $data->user_id = $request->get('user_id');
+        $data->status = $request->get('status');
+        $data->shipping_address = $request->get('shipping_address');
 
         $data->save();
 

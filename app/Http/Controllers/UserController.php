@@ -12,10 +12,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = User::all();
-        return response()->json($data);
+        $user = User::query()
+        ->role($request);
+        return $user->get();
     }
 
     /**
@@ -35,14 +36,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-            'origin' => 'required'
-          ]);
-          
           $data = new User([
             'name' => $request->get('name'),
-            'origin' => $request->get('origin')
+            'email' => $request->get('email'),
+            'date_of_birth' => $request->get('date_of_birth'),
+            'gender' => $request->get('gender'),
+            'phone_number' => $request->get('phone_number'),
+            'address' => $request->get('address'),
+            'password' => $request->get('password'),
+            'role' => $request->get('role')
           ]);
       
           $data->save();
@@ -83,14 +85,18 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $data = User::findOrFail($id);
-        $request->validate([
-        'name' => 'required|max:255',
-        'origin' => 'required'
-        ]);
-
-        $data->name = $request->get('name');
-        $data->origin = $request->get('origin');
-
+        // $request->validate([
+        // 'name' => 'required|max:255',
+        // 'origin' => 'required'
+        // ]);
+        $data->name =  $request->get('name');
+        $data->email =  $request->get('email');
+        $data->date_of_birth =  $request->get('date_of_birth');
+        $data->gender =  $request->get('gender');
+        $data->phone_number =  $request->get('phone_number');
+        $data->address =  $request->get('address');
+        $data->password =  $request->get('password');
+        $data->role =  $request->get('role');
         $data->save();
 
     return response()->json($data);

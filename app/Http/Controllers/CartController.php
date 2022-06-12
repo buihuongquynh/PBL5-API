@@ -14,9 +14,11 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = Cart::all();
+        $data = DB::table('carts')
+            ->join('products', 'carts.product_id', '=', 'products.id')
+            ->select('carts.*', 'products.*')->where('carts.user_id','=',$request->userId)->get();
         return response()->json($data);
     }
 
@@ -37,14 +39,14 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-            'origin' => 'required'
-          ]);
+        // $request->validate([
+        //     'name' => 'required|max:255',
+        //     'origin' => 'required'
+        //   ]);
           
           $data = new Cart([
-            'name' => $request->get('name'),
-            'origin' => $request->get('origin')
+            'user_id' => $request->get('user_id'),
+            'product_id' => $request->get('product_id')
           ]);
       
           $data->save();
@@ -85,13 +87,13 @@ class CartController extends Controller
     public function update(Request $request, $id)
     {
         $data = Cart::findOrFail($id);
-        $request->validate([
-        'name' => 'required|max:255',
-        'origin' => 'required'
-        ]);
+        // $request->validate([
+        // 'name' => 'required|max:255',
+        // 'origin' => 'required'
+        // ]);
 
-        $data->name = $request->get('name');
-        $data->origin = $request->get('origin');
+        $data->name = $request->get('user_id');
+        $data->origin = $request->get('product_id');
 
         $data->save();
 

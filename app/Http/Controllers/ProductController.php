@@ -13,10 +13,11 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = Product::all();
-        return response()->json($data);
+        $data = Product::query()
+        ->material($request);
+        return $data->get();
     }
 
     /**
@@ -36,14 +37,20 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-            'origin' => 'required'
-          ]);
+        // $request->validate([
+        //     'name' => 'required|max:255',
+        //     'origin' => 'required'
+        //   ]);
           
           $data = new Product([
             'name' => $request->get('name'),
-            'origin' => $request->get('origin')
+            'price' => $request->get('price'),
+            'discount' => $request->get('discount'),
+            'image' => $request->get('image'),
+            'size' => $request->get('size'),
+            'color' => $request->get('color'),
+            'category' => $request->get('category'),
+            'brand_id' => $request->get('brand_id'),
           ]);
       
           $data->save();
@@ -59,7 +66,9 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $data = Product::findOrFail($id);
+        $data = DB::table('products')
+            ->join('brands', 'products.brand_id', '=', 'brands.id')
+            ->select('products.*', 'brands.name as brand_name')->where('products.id','=',$id)->first();
         return response()->json($data);
     }
 
@@ -88,10 +97,14 @@ class ProductController extends Controller
         'name' => 'required|max:255',
         'origin' => 'required'
         ]);
-
         $data->name = $request->get('name');
-        $data->origin = $request->get('origin');
-
+        $data->price = $request->get('price');
+        $data->discount = $request->get('discount');
+        $data->image = $request->get('image');
+        $data->size = $request->get('size');
+        $data->color =$request->get('color');
+        $data->category = $request->get('category');
+        $data->brand_id = $request->get('brand_id');
         $data->save();
 
     return response()->json($data);

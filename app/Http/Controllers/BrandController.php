@@ -36,10 +36,10 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-            'origin' => 'required'
-          ]);
+        // $request->validate([
+        //     'name' => 'required|max:255',
+        //     'origin' => 'required'
+        //   ]);
           
           $data = new Brand([
             'name' => $request->get('name'),
@@ -84,10 +84,10 @@ class BrandController extends Controller
     public function update(Request $request, $id)
     {
         $data = Brand::findOrFail($id);
-        $request->validate([
-        'name' => 'required|max:255',
-        'origin' => 'required'
-        ]);
+        // $request->validate([
+        // 'name' => 'required|max:255',
+        // 'origin' => 'required'
+        // ]);
 
         $data->name = $request->get('name');
         $data->origin = $request->get('origin');
