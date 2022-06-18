@@ -13,12 +13,13 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
              $user = $request->user();
              $data['token'] = $user->createToken('MyApp')->accessToken;
              $data['name']  = $user->name;
-             return response()->json($data, 200);
+             $res = Auth::user();
+             $res['token'] = $data['token'];
+             return response()->json($res, 200);
          }
 
        return response()->json(['error'=>'Unauthorized'], 401);
