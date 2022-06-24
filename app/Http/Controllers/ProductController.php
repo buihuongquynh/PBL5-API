@@ -48,6 +48,7 @@ class ProductController extends Controller
             'discount' => $request->get('discount'),
             'image' => $request->get('image'),
             'size' => $request->get('size'),
+            'material' => $request->get('material'),
             'color' => $request->get('color'),
             'category' => $request->get('category'),
             'brand_id' => $request->get('brand_id'),
@@ -93,10 +94,6 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $data = Product::findOrFail($id);
-        $request->validate([
-        'name' => 'required|max:255',
-        'origin' => 'required'
-        ]);
         $data->name = $request->get('name');
         $data->price = $request->get('price');
         $data->discount = $request->get('discount');

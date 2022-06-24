@@ -44,7 +44,8 @@ class UserController extends Controller
             'phone_number' => $request->get('phone_number'),
             'address' => $request->get('address'),
             'password' => $request->get('password'),
-            'role' => $request->get('role')
+            'role' => $request->get('role'),
+            'avt' => $request->get('avt'),
           ]);
       
           $data->save();
@@ -91,11 +92,11 @@ class UserController extends Controller
         // ]);
         $data->name =  $request->get('name');
         $data->email =  $request->get('email');
+        $data->avt =  $request->get('avt');
         $data->date_of_birth =  $request->get('date_of_birth');
         $data->gender =  $request->get('gender');
         $data->phone_number =  $request->get('phone_number');
         $data->address =  $request->get('address');
-        $data->password =  $request->get('password');
         $data->role =  $request->get('role');
         $data->save();
 

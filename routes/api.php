@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,4 @@ Route::resource('brand', 'BrandController');
 Route::resource('cart', 'CartController');
 Route::resource('order', 'OrderController');
 Route::resource('product', 'ProductController');
+Route::resource('comment', 'CommentController');

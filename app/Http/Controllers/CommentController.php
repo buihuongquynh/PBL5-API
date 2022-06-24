@@ -1,37 +1,26 @@
 <?php
-
 namespace App\Http\Controllers;
-use App\Models\Order;
-
+use App\Models\Comment;
+use App\Models\Brand;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class OrderController extends Controller
+class CommentController extends Controller
 {
-      /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-        if(!$request->all){
-            $data = DB::table('orders')
-            ->join('products', 'orders.product_id', '=', 'products.id')
-            ->join('users', 'orders.user_id', '=', 'users.id')
-            ->select('orders.id as order','orders.status', 'products.*', 'users.name as username', 'users.address')->where('orders.user_id','=',$request->user_id)->get();
+        $data = DB::table('comments')
+            ->join('products', 'comments.product_id', '=', 'products.id')
+            ->join('users', 'comments.user_id', '=', 'users.id')
+            ->select('users.name as username','users.avt', 'comments.*')->where('comments.product_id','=',$request->product_id)->get();
         return response()->json($data);
-        }
-       else{
-        $data = DB::table('orders')
-        ->join('products', 'orders.product_id', '=', 'products.id')
-        ->join('users', 'orders.user_id', '=', 'users.id')
-        ->select('orders.id as order','orders.status', 'products.*', 'users.name as username', 'users.address')->get();
-    return response()->json($data);
-       }
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -49,18 +38,13 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'name' => 'required|max:255',
-        //     'origin' => 'required'
-        //   ]);
-          $data = new Order([
-            'product_id'=> $request->get('product_id'),
-            'user_id'=> $request->get('user_id'),
-            'status'=> $request->get('status'),
+          $data = new Comment([
+            'cmt' => $request->get('cmt'),
+            'rate' => $request->get('rate'),
+            'product_id' => $request->get('product_id'),
+            'user_id' => $request->get('user_id'),
           ]);
-      
           $data->save();
-      
           return response()->json($data);
     }
 
@@ -72,8 +56,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $data = Order::findOrFail($id);
-        return response()->json($data);
+        
     }
 
     /**
@@ -96,18 +79,10 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = Order::findOrFail($id);
-        // $request->validate([
-        // 'name' => 'required|max:255',
-        // 'origin' => 'required'
-        // ]);
-        $data->product_id = $request->get('product_id');
-        $data->user_id = $request->get('user_id');
-        $data->status = $request->get('status');
-        $data->shipping_address = $request->get('shipping_address');
-
+        $data = Comment::findOrFail($id);
+        $data->cmt = $request->get('cmt');
+        $data->rate = $request->get('rate');
         $data->save();
-
     return response()->json($data);
     }
 
@@ -119,7 +94,7 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        $data = Order::findOrFail($id);
+        $data = Comment::findOrFail($id);
         $data->delete();
         return response()->json($data::all());
     }

@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->boolean('gender')->index();
             $table->string('phone_number')->index();
             $table->string('address')->index();
+            $table->string('avt')->index();
             $table->string('password');
             $table->unsignedInteger('role');
             $table->rememberToken();

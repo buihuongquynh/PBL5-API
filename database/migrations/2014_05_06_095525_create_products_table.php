@@ -20,9 +20,9 @@ class CreateProductsTable extends Migration
             $table->unsignedInteger('discount');
             $table->string('image');
             $table->string('size');
-            $table->string('material')->nullable();;
+            $table->string('material')->nullable();
             $table->string('color');
-            $table->string('category')->nullable();;
+            $table->string('category')->nullable();
             $table->unsignedInteger('brand_id');
             $table->timestamps();
         });

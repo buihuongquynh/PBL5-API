@@ -31,6 +31,10 @@ class Product extends Model
         }
         return $query;
     }
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
     protected $fillable = [
         'name',
         'price',
